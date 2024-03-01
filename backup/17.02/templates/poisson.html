@@ -1,0 +1,151 @@
+{% extends 'layout.html'%} {% block title %} Home page {% endblock%} {% block
+content %}
+<section>
+ <nav class="main-nav">
+  <div class="fas fa-2x">
+   <i class="fa-solid fa-tower-broadcast"></i>
+   <span class="logo">WSN Framework</span>
+  </div>
+
+  <ul class="main-menu">
+   <li>
+    <a href="{{ url_for('main') }}">Home <i class="fa-solid fa-house"></i></a>
+   </li>
+   <li>
+    <a href="#">Tools <i class="fa-solid fa-wrench"></i></a>
+   </li>
+   <li>
+    <a href="#">Favorite <i class="fa-solid fa-star"></i></a>
+   </li>
+   <li>
+    <a href="#">Services <i class="fa-solid fa-screwdriver-wrench"></i></a>
+   </li>
+   <li>
+    <a href="#">Report <i class="fa-solid fa-chart-line"></i></a>
+   </li>
+   <li>
+    <a href="#">Setting <i class="fa-solid fa-gear"></i></a>
+   </li>
+  </ul>
+  <ul class="right-menu">
+   <li>
+    <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+   </li>
+   <li>
+    <a href="#"><i class="fa-solid fa-user"></i></a>
+   </li>
+  </ul>
+ </nav>
+</section>
+<section>
+ <div class="main-container">
+  <form id="createNodes" action="/" method="post">
+   <div class="form-control">
+    <label for="networkSize">Network Size(m)</label>
+    <div class="two-input">
+     <input
+      name="net_size_x"
+      type="number"
+      id="nsizex"
+      placeholder="network size: X"
+      value="{{ request.form['net_size_x'] }}"
+     />
+     <input
+      name="net_size_y"
+      type="number"
+      id="nsizey"
+      placeholder="network size: Y"
+      value="{{ request.form['net_size_y'] }}"
+     />
+    </div>
+   </div>
+
+   <div class="form-control">
+    <label for="nodes">Number of Nodes</label>
+    <input
+     name="nodes_no"
+     type="number"
+     id="nnodes"
+     placeholder="Enter total nodes"
+     value="{{ request.form['nodes_no'] }}"
+    />
+   </div>
+   <div class="form-control">
+    <label for="nodes">Node Radius</label>
+    <input
+     name="n_radius"
+     type="number"
+     id="noderadious"
+     placeholder="Enter node radius"
+     value="{{ request.form['n_radius'] }}"
+    />
+   </div>
+   <div class="form-control">
+    <label for="baseStation">Base Station(m)</label>
+    <div class="two-input">
+     <input
+      name="bs_x"
+      type="number"
+      id="bs_x"
+      placeholder="position: Xi"
+      value="{{ request.form['bs_x'] }}"
+     />
+     <input
+      name="bs_y"
+      type="number"
+      id="bs_y"
+      placeholder="position: Yi"
+      value="{{ request.form['bs_y'] }}"
+     />
+    </div>
+   </div>
+
+   <div class="form-control">
+    <label for="select">Distribution</label>
+    <!-- <select id="distribution">
+     <option>Choose...</option>
+     <option value="random">Random</option>
+     <option value="gaussian">Gaussian</option>
+     <option value="grid">Grid</option>
+     <option value="fixed">Fixed</option>
+    </select> -->
+    <select id="distribution" name="distribution">
+     <option>Choose...</option>
+     {% for o in data1 %}
+     <option value="{{ o.distribution }}">{{ o.distribution }}</option>
+     {% endfor %}
+    </select>
+   </div>
+
+   <div class="form-control">
+    <label for="select">Cluster Radius</label>
+    <select id="clusterRadius" name="clusterRadius">
+     <option>Choose...</option>
+     <option value="fixed">Fixed</option>
+     <option value="determined">Determined</option>
+    </select>
+   </div>
+   <div class="two-input">
+    <button type="submit" class="btn">Generate</button>
+    <button type="reset" onclick="formReset()" class="btn">Reset</button>
+   </div>
+  </form>
+
+  <div class="features">
+   <img src="{{ graph_image }}" />
+   <div class="feature">
+    <h2>Network data</h2>
+    {% for key,value in form_data.items() %}
+    <p>{{key}} : {{value}}</p>
+    {% endfor %}
+   </div>
+  </div>
+ </div>
+</section>
+{% endblock%} {% block formScript %}
+<script>
+ function formReset() {
+  document.getElementById('createNodes').reset();
+ }
+</script>
+{% endblock%}
